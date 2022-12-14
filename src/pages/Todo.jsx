@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toDoAPI } from '../apis';
+import TodoForm from '../components/todo/TodoForm';
 import { UserContext } from '../context/UserProvider';
 
 function Todo() {
@@ -44,6 +45,7 @@ function Todo() {
 
   return !isLoading ? (
     <div className="">
+      <TodoForm token={user} setTodos={setTodos} />
       <ul className="rounded-sm mt-2">
         {data && data.length > 0 ? (
           data.map((todo) => (
