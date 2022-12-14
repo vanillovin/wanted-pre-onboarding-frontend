@@ -49,7 +49,9 @@ function Todo() {
       <TodoForm token={user} setTodos={setTodos} />
       <ul className="rounded-sm mt-2">
         {data && data.length > 0 ? (
-          data.map((todo) => <TodoItem key={todo.id} todo={todo} />)
+          data.map((todo) => (
+            <TodoItem key={todo.id} token={user} todo={todo} setTodos={setTodos} />
+          ))
         ) : (
           <div>아직 투두가 없어요 👻</div>
         )}

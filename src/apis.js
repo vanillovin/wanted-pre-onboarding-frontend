@@ -27,34 +27,34 @@ export const authAPI = {
 };
 
 export const toDoAPI = {
-  createTodo: (string) => {
+  createTodo: (token, data) => {
+    headers.set('Authorization', `Bearer ${token}`);
     return fetch(`${TODO_URL}`, {
       method: 'POST',
       headers,
-      body: JSON.stringify(string),
+      body: JSON.stringify(data),
     });
   },
   getTodos: (token) => {
-    headers.set('Authorization', token);
+    headers.set('Authorization', `Bearer ${token}`);
     return fetch(`${TODO_URL}`, {
       method: 'GET',
       headers,
     });
   },
   updateTodo: (token, payload) => {
-    headers.set('Authorization', token);
+    headers.set('Authorization', `Bearer ${token}`);
     return fetch(`${TODO_URL}/${payload.id}`, {
       method: 'PUT',
       headers,
       body: JSON.stringify(payload.data),
     });
   },
-  deleteTodo: (token, payload) => {
-    headers.set('Authorization', token);
-    return fetch(`${TODO_URL}/${payload.id}`, {
+  deleteTodo: (token, id) => {
+    headers.set('Authorization', `Bearer ${token}`);
+    return fetch(`${TODO_URL}/${id}`, {
       method: 'DELETE',
       headers,
-      body: JSON.stringify(payload.data),
     });
   },
 };
