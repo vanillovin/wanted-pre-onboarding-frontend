@@ -3,7 +3,8 @@ import React, { createContext, useEffect, useState } from 'react';
 export const UserContext = createContext(null);
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState(localStorage.getItem('USER'));
+  const localStorageUser = localStorage.getItem('USER');
+  const [user, setUser] = useState(localStorageUser === 'null' ? null : localStorageUser);
 
   const onSetUser = (value) => setUser(value);
 
