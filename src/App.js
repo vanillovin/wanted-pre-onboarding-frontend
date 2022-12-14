@@ -1,9 +1,10 @@
 import './index.css';
+import Register from './pages/Register';
 
 function App() {
   return (
-    <div className="text-red-400">
-      Hello
+    <div className="">
+      <Register />
     </div>
   );
 }
