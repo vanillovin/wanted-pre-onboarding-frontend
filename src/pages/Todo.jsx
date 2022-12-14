@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toDoAPI } from '../apis';
 import TodoForm from '../components/todo/TodoForm';
+import TodoItem from '../components/todo/TodoItem';
 import { UserContext } from '../context/UserProvider';
 
 function Todo() {
@@ -48,12 +49,7 @@ function Todo() {
       <TodoForm token={user} setTodos={setTodos} />
       <ul className="rounded-sm mt-2">
         {data && data.length > 0 ? (
-          data.map((todo) => (
-            <li key={todo.id}>
-              {/* isCompleted, userId */}
-              <p>{todo.todo}</p>
-            </li>
-          ))
+          data.map((todo) => <TodoItem key={todo.id} todo={todo} />)
         ) : (
           <div>아직 투두가 없어요 👻</div>
         )}
