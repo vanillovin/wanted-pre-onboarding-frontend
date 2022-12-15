@@ -4,16 +4,16 @@ import { UserContext } from '../context/UserProvider';
 
 function NavigationBar() {
   const navigate = useNavigate();
-  const { user, onSetUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const handleLogout = () => {
-    onSetUser(null);
+    setUser(null);
     navigate('/');
   };
 
   return (
     <nav className="absolute p-4 top-0 left-0 w-full flex items-center justify-around bg-blue-100 bg-opacity-40">
-      <h1>Hello {':)'}</h1>
+      <h1>Hello {user ? `${user.name} :)` : ':)'}</h1>
       <ul className="flex items-center">
         <li>
           <Link to="/todo">투두</Link>

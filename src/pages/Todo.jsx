@@ -21,7 +21,7 @@ function Todo() {
 
   useEffect(() => {
     toDoAPI
-      .getTodos(user)
+      .getTodos(user.token)
       .then((res) => res.json())
       .then((data) => {
         console.log('getTodos data :', data);
@@ -46,11 +46,11 @@ function Todo() {
 
   return !isLoading ? (
     <div className="border w-96 p-3 rounded-md">
-      <TodoForm token={user} setTodos={setTodos} />
+      <TodoForm token={user.token} setTodos={setTodos} />
       <ul className="rounded-sm mt-2">
         {data && data.length > 0 ? (
           data.map((todo) => (
-            <TodoItem key={todo.id} token={user} todo={todo} setTodos={setTodos} />
+            <TodoItem key={todo.id} token={user.token} todo={todo} setTodos={setTodos} />
           ))
         ) : (
           <div>아직 투두가 없어요 👻</div>

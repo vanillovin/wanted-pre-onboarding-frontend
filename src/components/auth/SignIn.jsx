@@ -3,8 +3,7 @@ import { authAPI } from '../../apis';
 import { UserContext } from '../../context/UserProvider';
 
 function SignUp({ handleChangeSetIsMember }) {
-  const { user, onSetUser } = useContext(UserContext);
-  console.log('SignUp user :', user);
+  const { setUser } = useContext(UserContext);
 
   const [signInInputs, setSignInInputs] = useState({
     email: '',
@@ -27,7 +26,11 @@ function SignUp({ handleChangeSetIsMember }) {
       .then((res) => res.json())
       .then((data) => {
         if (!data.access_token || data.error) throw new Error(data.message);
-        onSetUser(data.access_token);
+        setUser((prev) => ({
+          ...prev,
+          name: email.split('@')[0],
+          token: data.access_token,
+        }));
       })
       .catch((err) => {
         alert(err.message);
