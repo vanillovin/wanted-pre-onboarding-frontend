@@ -20,26 +20,28 @@ function Todo() {
   }, [user, navigate]);
 
   useEffect(() => {
-    toDoAPI
-      .getTodos(user.token)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('getTodos data :', data);
-        if (data.error) throw new Error(data.message);
-        setTodos((prev) => ({
-          ...prev,
-          isLoading: false,
-          data,
-        }));
-      })
-      .catch((err) => {
-        console.log('getTodos err :', err);
-        setTodos((prev) => ({
-          ...prev,
-          isLoading: false,
-          error: err.message,
-        }));
-      });
+    if (user) {
+      toDoAPI
+        .getTodos(user.token)
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log('getTodos data :', data);
+          if (data.error) throw new Error(data.message);
+          setTodos((prev) => ({
+            ...prev,
+            isLoading: false,
+            data,
+          }));
+        })
+        .catch((err) => {
+          // console.log('getTodos err :', err);
+          setTodos((prev) => ({
+            ...prev,
+            isLoading: false,
+            error: err.message,
+          }));
+        });
+    }
   }, [user]);
 
   if (error) return <div>에러 발생! {error}</div>;
