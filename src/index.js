@@ -1,33 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from './App';
+import { RouterProvider } from 'react-router-dom';
+import './index.css';
 import UserProvider from './context/UserProvider';
-import Todo from './pages/Todo';
-import NavigationBar from './components/NavigationBar';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: (
-      <>
-        <NavigationBar />
-        <App />
-      </>
-    ),
-  },
-  {
-    path: 'todo',
-    element: (
-      <>
-        <NavigationBar />
-        <Todo />
-      </>
-    ),
-  },
-]);
+import router from './router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
