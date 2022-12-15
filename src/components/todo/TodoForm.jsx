@@ -4,10 +4,14 @@ import { toDoAPI } from '../../apis';
 function TodoForm({ token, setTodos }) {
   const [todo, setTodo] = useState('');
 
-  const onChangeString = (e) => setTodo(e.target.value);
+  const onChangeTodo = (e) => setTodo(e.target.value);
 
   const handleCreateTodo = (e) => {
     e.preventDefault();
+    if (todo.length < 4) {
+      alert('4글자 이상 입력해 주세요');
+      return;
+    }
     toDoAPI
       .createTodo(token, { todo })
       .then((res) => res.json())
@@ -26,10 +30,18 @@ function TodoForm({ token, setTodos }) {
       <input
         type="text"
         value={todo}
-        onChange={onChangeString}
-        className="border-b border-blue-100 outline-none p-1 flex-1"
+        onChange={onChangeTodo}
+        className={`border-b outline-none p-1 flex-1 ${
+          todo.length < 4 ? 'border-blue-100' : 'border-blue-200'
+        }`}
       />
-      <button type="submit" className="p-1 bg-blue-200 ml-1 rounded-md">
+      <button
+        type="submit"
+        disabled={todo.length < 4}
+        className={`p-1 ml-1 rounded-md ${
+          todo.length < 4 ? 'bg-blue-100' : 'bg-blue-200'
+        }`}
+      >
         추가
       </button>
     </form>
