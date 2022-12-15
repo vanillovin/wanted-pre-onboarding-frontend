@@ -19,9 +19,10 @@ function TodoForm({ token, setTodos }) {
         if (data.error) throw new Error(data.message);
         setTodo('');
         setTodos((prev) => ({ ...prev, data: [...prev.data, data] }));
+        alert('투두 추가 성공! ✨');
       })
       .catch((err) => {
-        alert(err.message);
+        alert(`투두 추가 실패 ${err.message}`);
       });
   };
 

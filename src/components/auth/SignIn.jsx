@@ -31,9 +31,10 @@ function SignUp({ handleChangeSetIsMember }) {
           name: email.split('@')[0],
           token: data.access_token,
         }));
+        alert('로그인 완료! 🌞');
       })
       .catch((err) => {
-        alert(err.message);
+        alert(`로그인 실패 ${err.message}`);
       });
   };
 

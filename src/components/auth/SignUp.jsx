@@ -50,7 +50,7 @@ function SignUp({ handleChangeSetIsMember }) {
         handleChangeSetIsMember();
       })
       .catch((err) => {
-        alert(err.message);
+        alert(`가입 실패 ${err.message}`);
       });
   };
 
