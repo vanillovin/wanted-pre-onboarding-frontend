@@ -9,7 +9,8 @@ function UserProvider({ children }) {
   const onSetUser = (value) => setUser(value);
 
   useEffect(() => {
-    localStorage.setItem('USER', user);
+    if (user === null) localStorage.removeItem('USER');
+    else localStorage.setItem('USER', user);
   }, [user]);
 
   return (
