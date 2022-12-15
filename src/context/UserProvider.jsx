@@ -9,13 +9,17 @@ function UserProvider({ children }) {
     token: localStorageUser === 'null' ? null : localStorageUser,
   });
 
+  const resetUser = () => setUser({ name: null, token: null });
+
   useEffect(() => {
-    if (user === null) localStorage.removeItem('USER');
+    if (!user.name) localStorage.removeItem('USER');
     else localStorage.setItem('USER', user.token);
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, setUser, resetUser }}>
+      {children}
+    </UserContext.Provider>
   );
 }
 

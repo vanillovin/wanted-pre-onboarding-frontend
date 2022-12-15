@@ -7,7 +7,9 @@ import { UserContext } from '../context/UserProvider';
 
 function Todo() {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const {
+    user: { token },
+  } = useContext(UserContext);
   const [todos, setTodos] = useState({
     isLoading: true,
     data: null,
@@ -16,13 +18,13 @@ function Todo() {
   const { isLoading, data, error } = todos;
 
   useEffect(() => {
-    if (!user) navigate('/');
-  }, [user, navigate]);
+    if (!token) navigate('/');
+  }, [token, navigate]);
 
   useEffect(() => {
-    if (user) {
+    if (token) {
       toDoAPI
-        .getTodos(user.token)
+        .getTodos(token)
         .then((res) => res.json())
         .then((data) => {
           // console.log('getTodos data :', data);
@@ -42,17 +44,17 @@ function Todo() {
           }));
         });
     }
-  }, [user]);
+  }, [token]);
 
   if (error) return <div>에러 발생! {error}</div>;
 
   return !isLoading ? (
     <div className="border w-96 p-3 rounded-md">
-      <TodoForm token={user.token} setTodos={setTodos} />
+      <TodoForm token={token} setTodos={setTodos} />
       <ul className="rounded-sm mt-2">
         {data && data.length > 0 ? (
           data.map((todo) => (
-            <TodoItem key={todo.id} token={user.token} todo={todo} setTodos={setTodos} />
+            <TodoItem key={todo.id} token={token} todo={todo} setTodos={setTodos} />
           ))
         ) : (
           <div>아직 투두가 없어요 👻</div>

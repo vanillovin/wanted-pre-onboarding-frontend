@@ -6,15 +6,17 @@ import SignUp from '../components/auth/SignUp';
 
 function Register() {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const {
+    user: { token },
+  } = useContext(UserContext);
 
   const [isMember, setIsMember] = useState(true);
 
   const handleChangeSetIsMember = () => setIsMember((prev) => !prev);
 
   useEffect(() => {
-    if (user) navigate('/todo');
-  }, [user, navigate]);
+    if (token) navigate('/todo');
+  }, [token, navigate]);
 
   return (
     <div className="">
