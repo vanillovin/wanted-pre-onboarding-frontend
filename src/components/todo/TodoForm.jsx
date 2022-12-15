@@ -22,12 +22,12 @@ function TodoForm({ token, setTodos }) {
   };
 
   return (
-    <form className="flex" onSubmit={handleCreateTodo}>
+    <form className="flex w-full items-center" onSubmit={handleCreateTodo}>
       <input
         type="text"
         value={todo}
         onChange={onChangeString}
-        className="border-b border-blue-100 outline-none p-1"
+        className="border-b border-blue-100 outline-none p-1 flex-1"
       />
       <button type="submit" className="p-1 bg-blue-200 ml-1 rounded-md">
         추가

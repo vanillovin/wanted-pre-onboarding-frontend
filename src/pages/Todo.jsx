@@ -45,7 +45,7 @@ function Todo() {
   if (error) return <div>에러 발생! {error}</div>;
 
   return !isLoading ? (
-    <div className="">
+    <div className="border w-96 p-3 rounded-md">
       <TodoForm token={user} setTodos={setTodos} />
       <ul className="rounded-sm mt-2">
         {data && data.length > 0 ? (
