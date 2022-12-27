@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { authAPI } from '../../apis';
 
-function SignUp({ handleChangeSetIsMember }) {
+interface SignUpProps {
+  handleChangeSetIsMember(): void;
+}
+
+function SignUp({ handleChangeSetIsMember }: SignUpProps) {
   const [emailInputs, setEmailInputs] = useState({
     value: '',
     error: null,
@@ -11,25 +15,28 @@ function SignUp({ handleChangeSetIsMember }) {
     error: null,
   });
 
-  const onChangeEmailInputs = (e) => {
+  const onChangeEmailInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmailInputs((prev) => ({ ...prev, value }));
     const check = value.match(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
     if (check === null) {
-      setEmailInputs((prev) => ({ ...prev, error: '이메일 형식이 올바르지 않습니다' }));
+      setEmailInputs((prev: any) => ({
+        ...prev,
+        error: '이메일 형식이 올바르지 않습니다',
+      }));
     } else {
       setEmailInputs((prev) => ({ ...prev, error: null }));
     }
   };
 
-  const onChangePasswordInputs = (e) => {
+  const onChangePasswordInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPasswordInputs((prev) => ({ ...prev, value }));
     const check = value.length < 8;
     if (check) {
-      setPasswordInputs((prev) => ({
+      setPasswordInputs((prev: any) => ({
         ...prev,
         error: '비밀번호는 8자 이상 입력해 주세요',
       }));
@@ -38,7 +45,7 @@ function SignUp({ handleChangeSetIsMember }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
     e.preventDefault();
     authAPI
       .signUp({ email: emailInputs.value, password: passwordInputs.value })
@@ -83,12 +90,6 @@ function SignUp({ handleChangeSetIsMember }) {
           className={`my-2 rounded-md ${
             !emailInputs.error && !passwordInputs.error ? 'bg-blue-300' : 'bg-blue-100'
           } p-1`}
-          disabled={
-            !emailInputs.value ||
-            !passwordInputs.value ||
-            emailInputs.error ||
-            passwordInputs.error
-          }
           onClick={handleSubmit}
         >
           회원가입하기

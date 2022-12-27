@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/UserProvider';
 import SignIn from '../components/auth/SignIn';
 import SignUp from '../components/auth/SignUp';
+import useUser from '../hooks/useUser';
 
 function Register() {
   const navigate = useNavigate();
   const {
     user: { token },
-  } = useContext(UserContext);
+  } = useUser();
 
   const [isMember, setIsMember] = useState(true);
 

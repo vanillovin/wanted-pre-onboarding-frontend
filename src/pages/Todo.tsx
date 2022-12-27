@@ -1,21 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toDoAPI } from '../apis';
 import TodoForm from '../components/todo/TodoForm';
 import TodoItem from '../components/todo/TodoItem';
-import { UserContext } from '../context/UserProvider';
+import { ITodo } from '../components/types/todo.type';
+import useUser from '../hooks/useUser';
+
+interface ITodoState {
+  loading: boolean;
+  todos: ITodo[];
+  error: string | null;
+}
 
 function Todo() {
   const navigate = useNavigate();
   const {
     user: { token },
-  } = useContext(UserContext);
-  const [todos, setTodos] = useState({
-    isLoading: true,
-    data: null,
+  } = useUser();
+
+  const [todo, setTodo] = useState<ITodoState>({
+    loading: true,
+    todos: [],
     error: null,
   });
-  const { isLoading, data, error } = todos;
+  const { loading, todos, error } = todo;
+
+  const onSetTodos = (todos: ITodo[]) =>
+    setTodo((prev) => ({
+      ...prev,
+      todos,
+    }));
 
   useEffect(() => {
     if (!token) navigate('/');
@@ -29,7 +43,7 @@ function Todo() {
         .then((data) => {
           // console.log('getTodos data :', data);
           if (data.error) throw new Error(data.message);
-          setTodos((prev) => ({
+          setTodo((prev) => ({
             ...prev,
             isLoading: false,
             data,
@@ -37,7 +51,7 @@ function Todo() {
         })
         .catch((err) => {
           // console.log('getTodos err :', err);
-          setTodos((prev) => ({
+          setTodo((prev) => ({
             ...prev,
             isLoading: false,
             error: err.message,
@@ -48,13 +62,19 @@ function Todo() {
 
   if (error) return <div>에러 발생! {error}</div>;
 
-  return !isLoading ? (
+  return !loading ? (
     <div className="border w-96 p-3 rounded-md">
-      <TodoForm token={token} setTodos={setTodos} />
+      <TodoForm token={token as string} onAddTodo={() => {}} />
       <ul className="rounded-sm mt-2">
-        {data && data.length > 0 ? (
-          data.map((todo) => (
-            <TodoItem key={todo.id} token={token} todo={todo} setTodos={setTodos} />
+        {todos.length > 0 ? (
+          todos.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              token={token as string}
+              todo={todo}
+              onUpdateTodo={() => {}}
+              onDeleteTodo={() => {}}
+            />
           ))
         ) : (
           <div>아직 투두가 없어요 👻</div>

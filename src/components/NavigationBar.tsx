@@ -1,16 +1,15 @@
-import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/UserProvider';
+import useUser from '../hooks/useUser';
 
 function NavigationBar() {
   const navigate = useNavigate();
   const {
     user: { name },
-    resetUser,
-  } = useContext(UserContext);
+    onResetUser,
+  } = useUser();
 
   const handleLogout = () => {
-    resetUser();
+    onResetUser();
     navigate('/');
   };
 

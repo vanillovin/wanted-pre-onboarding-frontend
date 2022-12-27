@@ -1,9 +1,13 @@
-import { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { authAPI } from '../../apis';
-import { UserContext } from '../../context/UserProvider';
+import useUser from '../../hooks/useUser';
 
-function SignUp({ handleChangeSetIsMember }) {
-  const { setUser } = useContext(UserContext);
+interface SignInProps {
+  handleChangeSetIsMember(): void;
+}
+
+function SignUp({ handleChangeSetIsMember }: SignInProps) {
+  const { onSetUser } = useUser();
 
   const [signInInputs, setSignInInputs] = useState({
     email: '',
@@ -11,7 +15,7 @@ function SignUp({ handleChangeSetIsMember }) {
   });
   const { email, password } = signInInputs;
 
-  const onChangeSignInInputs = (e) => {
+  const onChangeSignInInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSignInInputs((prev) => ({
       ...prev,
@@ -19,18 +23,17 @@ function SignUp({ handleChangeSetIsMember }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
     e.preventDefault();
     authAPI
       .signIn({ email, password })
       .then((res) => res.json())
       .then((data) => {
         if (!data.access_token || data.error) throw new Error(data.message);
-        setUser((prev) => ({
-          ...prev,
+        onSetUser({
           name: email.split('@')[0],
           token: data.access_token,
-        }));
+        });
         alert('로그인 완료! 🌞');
       })
       .catch((err) => {

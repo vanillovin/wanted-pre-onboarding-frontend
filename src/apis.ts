@@ -1,3 +1,6 @@
+import { AddTodoParams } from './components/types/todo.type';
+import { AuthParams } from './components/types/auth.type';
+
 const BASE_URL = 'https://pre-onboarding-selection-task.shop';
 const AUTH_URL = `${BASE_URL}/auth`;
 const TODO_URL = `${BASE_URL}/todos`;
@@ -10,14 +13,14 @@ headers.set('Access-Control-Allow-Credentials', 'true');
 headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
 export const authAPI = {
-  signUp: (data) => {
+  signUp: (data: AuthParams) => {
     return fetch(`${AUTH_URL}/signup`, {
       method: 'POST',
       headers,
       body: JSON.stringify(data),
     });
   },
-  signIn: (data) => {
+  signIn: (data: AuthParams) => {
     return fetch(`${AUTH_URL}/signin`, {
       method: 'POST',
       headers,
@@ -27,7 +30,7 @@ export const authAPI = {
 };
 
 export const toDoAPI = {
-  createTodo: (token, data) => {
+  createTodo: (token: any, data: any) => {
     headers.set('Authorization', `Bearer ${token}`);
     return fetch(`${TODO_URL}`, {
       method: 'POST',
@@ -35,14 +38,14 @@ export const toDoAPI = {
       body: JSON.stringify(data),
     });
   },
-  getTodos: (token) => {
+  getTodos: (token: any) => {
     headers.set('Authorization', `Bearer ${token}`);
     return fetch(`${TODO_URL}`, {
       method: 'GET',
       headers,
     });
   },
-  updateTodo: (token, payload) => {
+  updateTodo: (token: any, payload: any) => {
     headers.set('Authorization', `Bearer ${token}`);
     return fetch(`${TODO_URL}/${payload.id}`, {
       method: 'PUT',
@@ -50,7 +53,7 @@ export const toDoAPI = {
       body: JSON.stringify(payload.data),
     });
   },
-  deleteTodo: (token, id) => {
+  deleteTodo: (token: any, id: any) => {
     headers.set('Authorization', `Bearer ${token}`);
     return fetch(`${TODO_URL}/${id}`, {
       method: 'DELETE',
